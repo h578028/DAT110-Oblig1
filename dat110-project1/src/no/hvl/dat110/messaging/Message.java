@@ -3,6 +3,7 @@ package no.hvl.dat110.messaging;
 import java.util.Arrays;
 
 import no.hvl.dat110.TODO;
+import no.hvl.dat110.messaging.MessageConfig;
 
 public class Message {
 
@@ -24,12 +25,19 @@ public class Message {
 		
 		byte[] encoded = null;
 		
-		// TODO
-		// encapulate/encode the payload of this message in the
-		// encoded byte array according to message format
-		
-		if (true)
+		/*if (true)
 		   throw new UnsupportedOperationException(TODO.method());
+		*/
+		
+		int length = payload.length;
+		encoded = new byte[MessageConfig.SEGMENTSIZE];
+		
+		encoded[0] = (byte)length;
+		
+		for(int i = 0; i < length; i++) {
+			encoded[i+1] = payload[i];
+		}
+		
 
 		return encoded;
 		
@@ -37,11 +45,15 @@ public class Message {
 
 	public void decapsulate(byte[] received) {
 
-		// TODO
-		// decapsulate the data contained in the received byte array and store it 
-		// in the payload of this message
+		//throw new UnsupportedOperationException(TODO.method());
 		
-		throw new UnsupportedOperationException(TODO.method());
+		int length = received[0];
+		payload = new byte[length];
+		
+		for(int i = 0; i < length; i++) {
+			payload[i] = received[i+1];
+		}
+		
 		
 	}
 }
